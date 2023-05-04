@@ -11,15 +11,20 @@ class MovielistViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
+    var viewModel : MovielistViewModel? = nil
     
-    var moviesdata: MovieList? {
-        didSet {
-            DispatchQueue.main.async { [self] in
-                tableView.reloadData()
-            }
-        }
+    convenience init() {
+        self.init()
     }
     
+    init(_viewModel: MovielistViewModel) {
+        self.viewModel = _viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MovieListTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieListCell")
@@ -27,7 +32,10 @@ class MovielistViewController: UIViewController {
         tableView.dataSource = self
         
         NetworkManager.sharedInstance.urlRequest(urlString: "https://api.themoviedb.org/3/list/1?api_key=0e6dd54d1af0024aefdbdd5f8f422992&language=en-US") { [self] (movie: MovieList) in
-            moviesdata = movie
+            viewModel?.moviesdata = movie
+            DispatchQueue.main.async { [self] in
+                tableView.reloadData()
+            }
         }
     }
 }
@@ -36,23 +44,12 @@ class MovielistViewController: UIViewController {
 extension MovielistViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesdata?.item_count ?? 0
+        return viewModel?.moviesdata?.item_count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListCell", for: indexPath) as! MovieListTableViewCell
-        cell.MovieTitle?.text = moviesdata?.items[indexPath.row].title
-        if let posterUrl = moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
-            do {
-                URLSession.shared.dataTask(with: imgUrl) { _data, _response, _error in
-                    guard let data = _data else {return}
-                    DispatchQueue.main.async {
-                        cell.posterImage?.image = UIImage(data: data)
-                    }
-                }.resume()
-            } catch let exp {
-                print(exp)
-            }
-        }
+        cell.MovieTitle?.text =  viewModel?.fetchTitle(IndexPath: indexPath.row)
+        cell.posterImage?.image = viewModel?.fetchPoster(IndexPath: indexPath.row)
         return cell
     }
 }
@@ -62,10 +59,10 @@ extension MovielistViewController : UITableViewDelegate {
         return 200
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let posterUrl = moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+        if let posterUrl = viewModel?.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
             let detailVC = DetailViewController()
             
-            if let posterUrl = moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+            if let posterUrl = viewModel?.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
                 do {
                     URLSession.shared.dataTask(with: imgUrl) { _data, _response, _error in
                         guard let data = _data else {return}
@@ -77,6 +74,9 @@ extension MovielistViewController : UITableViewDelegate {
                     print(exp)
                 }
                 self.navigationController?.pushViewController(detailVC, animated: true)
+//                let detailVC = DetailViewController()
+//                detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
+//                self.navigationController?.pushViewController(detailVC, animated: true)
             }
         }
     }
