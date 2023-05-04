@@ -1,14 +1,13 @@
 //
-//  ViewController.swift
+//  MovielistViewController.swift
 //  Lab-1MVVM
 //
-//  Created by Appaiah on 03/05/23.
+//  Created by Appaiah on 04/05/23.
 //
 
 import UIKit
-import Foundation
 
-class ViewController: UIViewController {
+class MovielistViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
@@ -53,7 +52,7 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController : UITableViewDataSource {
+extension MovielistViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesdata?.item_count ?? 0
@@ -77,7 +76,7 @@ extension ViewController : UITableViewDataSource {
     }
 }
 
-extension ViewController : UITableViewDelegate {
+extension MovielistViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
