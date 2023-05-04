@@ -25,29 +25,10 @@ class MovielistViewController: UIViewController {
         tableView.register(UINib(nibName: "MovieListTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieListCell")
         tableView.delegate = self
         tableView.dataSource = self
-        fetchMovieList { [self] _movies in
-            moviesdata = _movies
+        
+        NetworkManager.sharedInstance.urlRequest(urlString: "https://api.themoviedb.org/3/list/1?api_key=0e6dd54d1af0024aefdbdd5f8f422992&language=en-US") { [self] (movie: MovieList) in
+            moviesdata = movie
         }
-    }
-    
-    func fetchMovieList(completionHandler : @escaping (MovieList) -> ()) {
-        networkCall { data in
-            do {
-                let movieList = try JSONDecoder().decode(MovieList.self,from: data)
-                print(movieList)
-                completionHandler(movieList)
-            } catch let exp {
-                print(exp)
-            }
-        }
-    }
-    
-    func networkCall(completionHandler : @escaping (Data) -> ()) {
-        var urlReq = URLRequest(url: URL(string: "https://api.themoviedb.org/3/list/1?api_key=0e6dd54d1af0024aefdbdd5f8f422992&language=en-US")!)
-        URLSession.shared.dataTask(with: urlReq) { _data, _response , _error in
-            guard let data = _data else { return }
-            completionHandler(data)
-        }.resume()
     }
 }
 
