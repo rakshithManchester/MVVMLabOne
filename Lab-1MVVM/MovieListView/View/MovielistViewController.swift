@@ -11,14 +11,14 @@ class MovielistViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
-    var viewModel : MovielistViewModel? = nil
+    var viewModel : MovielistViewModel
     
     convenience init() {
         self.init()
     }
     
-    init(_viewModel: MovielistViewModel) {
-        self.viewModel = _viewModel
+    init(viewModel: MovielistViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,7 +32,7 @@ class MovielistViewController: UIViewController {
         tableView.dataSource = self
         
         NetworkManager.sharedInstance.urlRequest(urlString: "https://api.themoviedb.org/3/list/1?api_key=0e6dd54d1af0024aefdbdd5f8f422992&language=en-US") { [self] (movie: MovieList) in
-            viewModel?.moviesdata = movie
+            viewModel.moviesdata = movie
             DispatchQueue.main.async { [self] in
                 tableView.reloadData()
             }
@@ -44,12 +44,12 @@ class MovielistViewController: UIViewController {
 extension MovielistViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.moviesdata?.item_count ?? 0
+        return viewModel.moviesdata?.item_count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListCell", for: indexPath) as! MovieListTableViewCell
-        cell.MovieTitle?.text =  viewModel?.fetchTitle(IndexPath: indexPath.row)
-        cell.posterImage?.image = viewModel?.fetchPoster(IndexPath: indexPath.row)
+        cell.MovieTitle?.text =  viewModel.fetchTitle(IndexPath: indexPath.row)
+        cell.posterImage?.image = viewModel.fetchPoster(IndexPath: indexPath.row)
         return cell
     }
 }
@@ -59,13 +59,13 @@ extension MovielistViewController : UITableViewDelegate {
         return 200
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let posterUrl = viewModel?.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+        if let posterUrl = viewModel.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
             let detailVC = DetailViewController()
             
-            if let posterUrl = viewModel?.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+            if let posterUrl = viewModel.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
                 do {
-                    URLSession.shared.dataTask(with: imgUrl) { _data, _response, _error in
-                        guard let data = _data else {return}
+                    URLSession.shared.dataTask(with: imgUrl) { data, response, error in
+                        guard let data = data else {return}
                         DispatchQueue.main.async {
                             detailVC.imgData = data
                         }

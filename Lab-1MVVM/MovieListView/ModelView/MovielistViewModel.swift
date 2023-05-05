@@ -20,9 +20,9 @@ class MovielistViewModel {
         var imgData = Data()
         if let posterUrl = moviesdata?.items[IndexPath].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
             do {
-                URLSession.shared.dataTask(with: imgUrl) { _data, _response, _error in
-                    imgData = _data ?? Data()
-                    self.movieImg = UIImage(data: imgData)!
+                URLSession.shared.dataTask(with: imgUrl) {[weak self] data, response, error in
+                    imgData = data ?? Data()
+                    self?.movieImg = UIImage(data: imgData)!
                 }.resume()
             } catch let exp {
                 print(exp)

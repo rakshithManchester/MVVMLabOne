@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let windSize = UIScreen.main.bounds
         window = UIWindow(frame: windSize)
-        window?.rootViewController = UINavigationController(rootViewController: MovielistViewController(_viewModel: MovielistViewModel()))
+        window?.rootViewController = UINavigationController(rootViewController: MovielistViewController(viewModel: MovielistViewModel()))
         window?.makeKeyAndVisible()
         return true
     }
