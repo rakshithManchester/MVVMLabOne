@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkManager {
+final class NetworkManager {
     static let sharedInstance = NetworkManager()
     
     func urlRequest<T>(urlString: String, completionHandler: @escaping (T)->()) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovielistViewController: UIViewController {
+final class MovielistViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"

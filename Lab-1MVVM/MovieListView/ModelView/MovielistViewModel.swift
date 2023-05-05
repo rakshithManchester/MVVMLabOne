@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MovielistViewModel {
+final class MovielistViewModel {
     var moviesdata: MovieList?
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
     var movieImg: UIImage?

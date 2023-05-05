@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieListTableViewCell: UITableViewCell {
+final class MovieListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var posterImage: UIImageView?
     @IBOutlet weak var MovieTitle: UILabel?
