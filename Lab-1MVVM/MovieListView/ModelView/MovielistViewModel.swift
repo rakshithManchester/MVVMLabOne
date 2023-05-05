@@ -6,28 +6,25 @@
 //
 
 import Foundation
-import UIKit
 
 final class MovielistViewModel {
     var moviesdata: MovieList?
-    
-    var movieImg: UIImage?
+    var posterImage: Data?
     
     func fetchTitle(indexPath: Int) -> String {
         return moviesdata?.items[indexPath].title ?? ""
     }
-    func fetchPoster(indexPath: Int) -> UIImage {
-        var imgData = Data()
+    func fetchPoster(indexPath: Int) -> Data {
         if let posterUrl = moviesdata?.items[indexPath].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
             do {
                 URLSession.shared.dataTask(with: imgUrl) {[weak self] data, response, error in
-                    imgData = data ?? Data()
-                    self?.movieImg = UIImage(data: imgData)!
+                    self?.posterImage = data
                 }.resume()
             } catch let exp {
                 print(exp)
             }
         }
-        return self.movieImg ?? UIImage()
+        guard let posterImg = self.posterImage else { return Data()}
+        return posterImg
     }
 }

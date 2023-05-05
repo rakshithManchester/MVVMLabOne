@@ -16,9 +16,25 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let windSize = UIScreen.main.bounds
         window = UIWindow(frame: windSize)
-        window?.rootViewController = UINavigationController(rootViewController: MovielistViewController(viewModel: MovielistViewModel()))
+        let navigationController = AppDelegateFactoryMethods.getMainNavigationController()
+        navigationController.setViewControllers([AppDelegateFactoryMethods.getrootViewController()], animated: true)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
     }
 }
 
+protocol AppDelegateFactoryProtocol {
+    static func getMainNavigationController() -> UINavigationController
+    static func getrootViewController() -> MovielistViewController
+}
+
+class AppDelegateFactoryMethods: AppDelegateFactoryProtocol {
+   static func getMainNavigationController() -> UINavigationController {
+        return UINavigationController()
+    }
+    
+    static func getrootViewController() -> MovielistViewController {
+        return MovielistViewController(viewModel: MovielistViewModel())
+    }
+}

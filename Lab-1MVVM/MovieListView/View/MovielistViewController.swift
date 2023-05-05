@@ -47,7 +47,8 @@ extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath) as! MovieListTableViewCell
         cell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
-        cell.posterImage?.image = viewModel.fetchPoster(indexPath: indexPath.row)
+        let imgData = viewModel.fetchPoster(indexPath: indexPath.row)
+        cell.posterImage?.image =  UIImage(data: imgData)
         return cell
     }
 }
@@ -57,25 +58,32 @@ extension MovielistViewController : UITableViewDelegate {
         return 200
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = DetailViewFactory.getDetailViewController()
         if let posterUrl = viewModel.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
-            let detailVC = DetailViewController()
-            
-            if let posterUrl = viewModel.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
-                do {
-                    URLSession.shared.dataTask(with: imgUrl) { data, response, error in
-                        guard let data = data else {return}
-                        DispatchQueue.main.async {
-                            detailVC.imgData = data
-                        }
-                    }.resume()
-                } catch let exp {
-                    print(exp)
-                }
-                self.navigationController?.pushViewController(detailVC, animated: true)
-//                let detailVC = DetailViewController()
-//                detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
-//                self.navigationController?.pushViewController(detailVC, animated: true)
+            do {
+                URLSession.shared.dataTask(with: imgUrl) { data, response, error in
+                    guard let data = data else {return}
+                    DispatchQueue.main.async {
+                        detailVC.imgData = data
+                    }
+                }.resume()
+            } catch let exp {
+                print(exp)
             }
+            self.navigationController?.pushViewController(detailVC, animated: true)
         }
+//        let detailVC = DetailViewController()
+//        detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
+//        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+protocol DetailViewFactoryProtocol {
+    static func getDetailViewController() -> DetailViewController
+}
+
+class DetailViewFactory : DetailViewFactoryProtocol {
+   static func getDetailViewController() -> DetailViewController {
+        return  DetailViewController()
     }
 }

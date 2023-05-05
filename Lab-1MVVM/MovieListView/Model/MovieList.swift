@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieList: Codable {
+struct MovieList: Decodable {
     let created_by: String
     let description: String
     let favorite_count: Int
@@ -19,7 +19,7 @@ struct MovieList: Codable {
     let poster_path: String
 }
 
-struct ItemList : Codable {
+struct ItemList : Decodable {
     let adult: Bool
     let backdrop_path: String
     let genre_ids: [Int]
