@@ -10,7 +10,7 @@ import UIKit
 
 final class MovielistViewModel {
     var moviesdata: MovieList?
-    let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
+    
     var movieImg: UIImage?
     
     func fetchTitle(indexPath: Int) -> String {
@@ -18,7 +18,7 @@ final class MovielistViewModel {
     }
     func fetchPoster(indexPath: Int) -> UIImage {
         var imgData = Data()
-        if let posterUrl = moviesdata?.items[indexPath].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+        if let posterUrl = moviesdata?.items[indexPath].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
             do {
                 URLSession.shared.dataTask(with: imgUrl) {[weak self] data, response, error in
                     imgData = data ?? Data()

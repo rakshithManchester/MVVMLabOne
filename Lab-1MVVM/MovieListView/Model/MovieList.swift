@@ -33,6 +33,6 @@ struct ItemList : Codable {
     let release_date: String
     let title: String
     let video: Bool
-    let vote_average: Float
+    let vote_average: Double
     let vote_count: Int
 }
