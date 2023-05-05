@@ -15,12 +15,10 @@ final class MovielistViewController: UIViewController {
     convenience init() {
         self.init()
     }
-    
     init(viewModel: MovielistViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,9 +38,8 @@ final class MovielistViewController: UIViewController {
 }
 
 extension MovielistViewController : UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.moviesdata?.item_count ?? 0
+        return viewModel.moviesdata?.itemCount ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath) as! MovieListTableViewCell
@@ -59,7 +56,7 @@ extension MovielistViewController : UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailViewFactory.getDetailViewController()
-        if let posterUrl = viewModel.moviesdata?.items[indexPath.row].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
+        if let posterUrl = viewModel.moviesdata?.items[indexPath.row].posterPath, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
             do {
                 URLSession.shared.dataTask(with: imgUrl) { data, response, error in
                     guard let data = data else {return}
@@ -72,9 +69,9 @@ extension MovielistViewController : UITableViewDelegate {
             }
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
-//        let detailVC = DetailViewController()
-//        detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
-//        self.navigationController?.pushViewController(detailVC, animated: true)
+        //        let detailVC = DetailViewController()
+        //        detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
+        //        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
@@ -83,7 +80,7 @@ protocol DetailViewFactoryProtocol {
 }
 
 class DetailViewFactory : DetailViewFactoryProtocol {
-   static func getDetailViewController() -> DetailViewController {
+    static func getDetailViewController() -> DetailViewController {
         return  DetailViewController()
     }
 }

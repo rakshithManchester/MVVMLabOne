@@ -15,7 +15,7 @@ final class MovielistViewModel {
         return moviesdata?.items[indexPath].title ?? ""
     }
     func fetchPoster(indexPath: Int) -> Data {
-        if let posterUrl = moviesdata?.items[indexPath].poster_path, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
+        if let posterUrl = moviesdata?.items[indexPath].posterPath, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
             do {
                 URLSession.shared.dataTask(with: imgUrl) {[weak self] data, response, error in
                     self?.posterImage = data
