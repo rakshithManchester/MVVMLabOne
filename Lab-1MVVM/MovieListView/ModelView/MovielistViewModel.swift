@@ -13,12 +13,12 @@ final class MovielistViewModel {
     let imgBaseURL = "https://image.tmdb.org/t/p/w500/"
     var movieImg: UIImage?
     
-    func fetchTitle(IndexPath: Int) -> String {
-        return moviesdata?.items[IndexPath].title ?? ""
+    func fetchTitle(indexPath: Int) -> String {
+        return moviesdata?.items[indexPath].title ?? ""
     }
-    func fetchPoster(IndexPath: Int) -> UIImage {
+    func fetchPoster(indexPath: Int) -> UIImage {
         var imgData = Data()
-        if let posterUrl = moviesdata?.items[IndexPath].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
+        if let posterUrl = moviesdata?.items[indexPath].poster_path, let imgUrl = URL(string: imgBaseURL + posterUrl) {
             do {
                 URLSession.shared.dataTask(with: imgUrl) {[weak self] data, response, error in
                     imgData = data ?? Data()

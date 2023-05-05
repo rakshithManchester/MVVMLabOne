@@ -48,8 +48,8 @@ extension MovielistViewController : UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListCell", for: indexPath) as! MovieListTableViewCell
-        cell.MovieTitle?.text =  viewModel.fetchTitle(IndexPath: indexPath.row)
-        cell.posterImage?.image = viewModel.fetchPoster(IndexPath: indexPath.row)
+        cell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
+        cell.posterImage?.image = viewModel.fetchPoster(indexPath: indexPath.row)
         return cell
     }
 }
