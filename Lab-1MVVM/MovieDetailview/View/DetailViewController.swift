@@ -8,16 +8,15 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-    
     @IBOutlet weak var posterImg: UIImageView!
     var imgData: Data? = nil {
         didSet {
-            self.posterImg.image = UIImage(data: imgData!)
+            if let data = imgData {
+                self.posterImg.image = UIImage(data: data)
+            }
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
 }

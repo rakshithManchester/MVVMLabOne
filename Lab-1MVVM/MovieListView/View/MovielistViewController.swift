@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class MovielistViewController: UIViewController {
     
@@ -36,7 +37,6 @@ final class MovielistViewController: UIViewController {
         }
     }
 }
-
 extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.moviesdata?.itemCount ?? 0
@@ -44,8 +44,9 @@ extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath) as! MovieListTableViewCell
         cell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
-        let imgData = viewModel.fetchPoster(indexPath: indexPath.row)
-        cell.posterImage?.image =  UIImage(data: imgData)
+        let imgUrl = viewModel.fetchImage(indexPath: indexPath.row)
+        cell.posterImage?.kf.indicatorType = .activity
+        cell.posterImage?.kf.setImage(with: imgUrl)
         return cell
     }
 }
@@ -69,9 +70,9 @@ extension MovielistViewController : UITableViewDelegate {
             }
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
-        //        let detailVC = DetailViewController()
-        //        detailVC.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
-        //        self.navigationController?.pushViewController(detailVC, animated: true)
+        //    let detailViewCon = DetailViewController()
+        //    detailViewCon.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
+        //    self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
