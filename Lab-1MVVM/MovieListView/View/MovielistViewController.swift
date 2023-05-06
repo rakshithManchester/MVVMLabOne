@@ -11,13 +11,16 @@ import Kingfisher
 final class MovielistViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var viewModel : MovielistViewModel
+    private let viewModel : MovielistViewModel
+    let factory: AppDelegateFactoryProtocol
+    var navigation: UINavigationController!
     
     convenience init() {
         self.init()
     }
-    init(viewModel: MovielistViewModel) {
+    init(viewModel: MovielistViewModel,factory: AppDelegateFactoryProtocol) {
         self.viewModel = viewModel
+        self.factory = factory
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -26,6 +29,7 @@ final class MovielistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: Constants.movieTableviewcellName, bundle: nil), forCellReuseIdentifier: Constants.movieCellID)
+        // UINib(nibName: Constants.movieTableviewcellName, bundle: nil) convert to fatcory in enum
         tableView.delegate = self
         tableView.dataSource = self
         

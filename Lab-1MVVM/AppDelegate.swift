@@ -9,32 +9,33 @@ import UIKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
+    var appDelegateFactoryinit = AppDelegateFactoryMethods()
+    var movieListCoordinator: MovieListCoordinator!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
         let windSize = UIScreen.main.bounds
         window = UIWindow(frame: windSize)
-        let navigationController = AppDelegateFactoryMethods.getMainNavigationController()
-        navigationController.setViewControllers([AppDelegateFactoryMethods.getrootViewController()], animated: true)
+        let navigationController = UINavigationController()
+        
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        movieListCoordinator = MovieListCoordinator(navigation: window?.rootViewController as!
+                                                    UINavigationController)
+        movieListCoordinator.start()
         return true
     }
 }
 
 protocol AppDelegateFactoryProtocol {
-    static func getMainNavigationController() -> UINavigationController
-    static func getrootViewController() -> MovielistViewController
+    func getrootViewController() -> MovielistViewController
 }
 
 class AppDelegateFactoryMethods: AppDelegateFactoryProtocol {
-   static func getMainNavigationController() -> UINavigationController {
-        return UINavigationController()
-    }
+    let vm = MovielistViewModel()
     
-    static func getrootViewController() -> MovielistViewController {
-        return MovielistViewController(viewModel: MovielistViewModel())
+    func getrootViewController() -> MovielistViewController {
+        return MovielistViewController(viewModel: vm,factory: self)
     }
 }
