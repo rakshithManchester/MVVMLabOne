@@ -11,7 +11,7 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var posterImg: UIImageView!
     var posterImgStr: String! {
         didSet {
-            if let imgUrl = URL(string: Constants.imgBaseURL + posterImgStr) {
+            if let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + posterImgStr) {
                 do {
                     URLSession.shared.dataTask(with: imgUrl) { data, response, error in
                         guard let data = data else {return}

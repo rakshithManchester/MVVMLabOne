@@ -28,12 +28,12 @@ final class MovielistViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: Constants.movieTableviewcellName, bundle: nil), forCellReuseIdentifier: Constants.movieCellID)
+        tableView.register(UINib(nibName: Constants.TableCellConstants.movieTableviewcellName.rawValue, bundle: nil), forCellReuseIdentifier: Constants.TableCellConstants.movieCellID.rawValue)
         // UINib(nibName: Constants.movieTableviewcellName, bundle: nil) convert to fatcory in enum
         tableView.delegate = self
         tableView.dataSource = self
         
-        NetworkManager.sharedInstance.urlRequest(urlString: Constants.movieList) { [self] (movie: MovieList) in
+        NetworkManager.sharedInstance.urlRequest(urlString: Constants.AppConstants.movieListBaseURL.rawValue) { [self] (movie: MovieList) in
             viewModel.moviesdata = movie
             DispatchQueue.main.async { [self] in
                 tableView.reloadData()
@@ -46,7 +46,7 @@ extension MovielistViewController : UITableViewDataSource {
         return viewModel.moviesdata?.itemCount ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellConstants.movieCellID.rawValue, for: indexPath)
         guard let MovieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
         MovieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel)
         return MovieListcell

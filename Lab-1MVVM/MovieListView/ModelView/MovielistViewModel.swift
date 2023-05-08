@@ -18,7 +18,7 @@ final class MovielistViewModel {
     
     func fetchImage(indexPath: Int) -> URL? {
         guard  let posterUrl = moviesdata?.items[indexPath].posterPath else { return nil }
-        guard let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) else { return nil }
+        guard let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + posterUrl) else { return nil }
         return imgUrl
     }
 }
