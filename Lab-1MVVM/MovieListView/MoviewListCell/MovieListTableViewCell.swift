@@ -8,7 +8,6 @@
 import UIKit
 
 final class MovieListTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var posterImage: UIImageView?
     @IBOutlet weak var MovieTitle: UILabel?
 
@@ -18,6 +17,5 @@ final class MovieListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
 }

@@ -7,20 +7,17 @@
 
 import UIKit
 
-
-class MovieListCoordinator : Coordinator {
-    var navigation: UINavigationController
+final class MovieListCoordinator : Coordinator {
+    let navigation: UINavigationController
     var childCoordinator: [Coordinator] = []
-    var movielistViewController: MovielistViewController!
     var appDelegateFactoryinit = AppDelegateFactoryMethods()
     
     required init(navigation: UINavigationController) {
         self.navigation = navigation
+        childCoordinator.append(self)
     }
     
     func start() {
-        movielistViewController = appDelegateFactoryinit.getrootViewController()
-        navigation.setViewControllers([movielistViewController], animated: true)
+        navigation.setViewControllers([appDelegateFactoryinit.getrootViewController()], animated: true)
     }
-    
 }
