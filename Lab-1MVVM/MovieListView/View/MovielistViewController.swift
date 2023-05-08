@@ -46,12 +46,13 @@ extension MovielistViewController : UITableViewDataSource {
         return viewModel.moviesdata?.itemCount ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath) as! MovieListTableViewCell
-        cell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath)
+        guard let MovieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
+        MovieListcell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
         let imgUrl = viewModel.fetchImage(indexPath: indexPath.row)
-        cell.posterImage?.kf.indicatorType = .activity
-        cell.posterImage?.kf.setImage(with: imgUrl)
-        return cell
+        MovieListcell.posterImage?.kf.indicatorType = .activity
+        MovieListcell.posterImage?.kf.setImage(with: imgUrl)
+        return MovieListcell
     }
 }
 
@@ -62,21 +63,9 @@ extension MovielistViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailViewFactory.getDetailViewController()
         if let posterUrl = viewModel.moviesdata?.items[indexPath.row].posterPath, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
-            do {
-                URLSession.shared.dataTask(with: imgUrl) { data, response, error in
-                    guard let data = data else {return}
-                    DispatchQueue.main.async {
-                        detailVC.imgData = data
-                    }
-                }.resume()
-            } catch let exp {
-                print(exp)
-            }
+            detailVC.posterUrl = imgUrl
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
-        //    let detailViewCon = DetailViewController()
-        //    detailViewCon.imgData = viewModel?.fetchPoster(IndexPath: indexPath.row)
-        //    self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
