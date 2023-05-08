@@ -26,4 +26,10 @@ final class MovieListTableViewCell: UITableViewCell {
         posterImage?.kf.indicatorType = .activity
         posterImage?.kf.setImage(with: imgUrl)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.posterImage = nil
+        self.movieTitle = nil
+    }
 }
