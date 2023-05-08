@@ -9,17 +9,19 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     @IBOutlet weak var posterImg: UIImageView!
-    var posterUrl: URL! {
+    var posterImgStr: String! {
         didSet {
-            do {
-                URLSession.shared.dataTask(with: posterUrl) { data, response, error in
-                    guard let data = data else {return}
-                    DispatchQueue.main.async { [self] in
-                        posterImg.image = UIImage(data: data)
-                    }
-                }.resume()
-            } catch let exp {
-                print(exp)
+            if let imgUrl = URL(string: Constants.imgBaseURL + posterImgStr) {
+                do {
+                    URLSession.shared.dataTask(with: imgUrl) { data, response, error in
+                        guard let data = data else {return}
+                        DispatchQueue.main.async { [self] in
+                            posterImg.image = UIImage(data: data)
+                        }
+                    }.resume()
+                } catch let exp {
+                    print(exp)
+                }
             }
         }
     }

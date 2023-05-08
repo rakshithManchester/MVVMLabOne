@@ -10,6 +10,7 @@ import Foundation
 final class MovielistViewModel {
     var moviesdata: MovieList?
     var posterImage: Data?
+    var posterImageString: String?
     
     func fetchTitle(indexPath: Int) -> String {
         return moviesdata?.items[indexPath].title ?? ""

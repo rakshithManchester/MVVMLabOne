@@ -59,8 +59,8 @@ extension MovielistViewController : UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailViewFactory.getDetailViewController()
-        if let posterUrl = viewModel.moviesdata?.items[indexPath.row].posterPath, let imgUrl = URL(string: Constants.imgBaseURL + posterUrl) {
-            detailVC.posterUrl = imgUrl
+        if let posterPath = viewModel.moviesdata?.items[indexPath.row].posterPath {
+            detailVC.posterImgStr = posterPath
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
