@@ -9,24 +9,33 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     @IBOutlet weak var posterImg: UIImageView!
-    var posterImgStr: String! {
+    @IBOutlet weak var movieName: UILabel!
+    private let viewModel: MovieDetailsViewModel
+    var movies: ItemList! {
         didSet {
-            if let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + posterImgStr) {
-                do {
-                    URLSession.shared.dataTask(with: imgUrl) { data, response, error in
-                        guard let data = data else {return}
-                        DispatchQueue.main.async { [self] in
-                            posterImg.image = UIImage(data: data)
-                        }
-                    }.resume()
-                } catch let exp {
-                    print(exp)
-                }
-            }
+            viewModel.movieList = movies
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
+    }
+    
+    convenience init() {
+        self.init()
+    }
+    
+    init(viewModel: MovieDetailsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func updateUI() {
+        posterImg.kf.indicatorType = .activity
+        posterImg.kf.setImage(with: viewModel.getMoviePosterImg())
+        movieName.text = viewModel.getMovieTitle()
     }
 }

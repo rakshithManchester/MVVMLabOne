@@ -58,20 +58,20 @@ extension MovielistViewController : UITableViewDelegate {
         return 200
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = DetailViewFactory.getDetailViewController()
-        if let posterPath = viewModel.moviesdata?.items[indexPath.row].posterPath {
-            detailVC.posterImgStr = posterPath
-            self.navigationController?.pushViewController(detailVC, animated: true)
-        }
+        let detailVCFactory = DetailViewFactory()
+        let detailVC = detailVCFactory.getDetailViewController()
+        detailVC.movies = viewModel.moviesdata?.items[indexPath.row]
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
 protocol DetailViewFactoryProtocol {
-    static func getDetailViewController() -> DetailViewController
+    func getDetailViewController() -> DetailViewController
 }
 
 class DetailViewFactory : DetailViewFactoryProtocol {
-    static func getDetailViewController() -> DetailViewController {
-        return  DetailViewController()
+    let detailsViewModel = MovieDetailsViewModel()
+    func getDetailViewController() -> DetailViewController {
+        return  DetailViewController(viewModel: detailsViewModel)
     }
 }

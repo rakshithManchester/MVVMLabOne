@@ -14,11 +14,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var movieListCoordinator: MovieListCoordinator!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         let windSize = UIScreen.main.bounds
         window = UIWindow(frame: windSize)
         let navigationController = UINavigationController()
-        
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         movieListCoordinator = MovieListCoordinator(navigation: window?.rootViewController as!
