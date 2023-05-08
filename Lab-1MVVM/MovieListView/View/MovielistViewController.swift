@@ -13,7 +13,6 @@ final class MovielistViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let viewModel : MovielistViewModel
     let factory: AppDelegateFactoryProtocol
-    var navigation: UINavigationController!
     
     convenience init() {
         self.init()
@@ -58,10 +57,10 @@ extension MovielistViewController : UITableViewDelegate {
         return 200
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVCFactory = DetailViewFactory()
-        let detailVC = detailVCFactory.getDetailViewController()
-        detailVC.movies = viewModel.moviesdata?.items[indexPath.row]
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        // TODO: is initialising Coordinator correct ??
+        let movieDetailCoordinator = MovieDetailCoordinator(navigation: self.navigationController ?? UINavigationController())
+        movieDetailCoordinator.movieItem = viewModel.moviesdata?.items[indexPath.row]
+        movieDetailCoordinator.start()
     }
 }
 
