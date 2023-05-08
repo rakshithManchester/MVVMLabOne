@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class MovieListTableViewCell: UITableViewCell {
     @IBOutlet weak var posterImage: UIImageView?
-    @IBOutlet weak var MovieTitle: UILabel?
+    @IBOutlet weak var movieTitle: UILabel?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,5 +18,12 @@ final class MovieListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func updateUI(indexPathRow: Int, viewModel : MovielistViewModel) {
+        movieTitle?.text =  viewModel.fetchTitle(indexPath: indexPathRow)
+        let imgUrl = viewModel.fetchImage(indexPath: indexPathRow)
+        posterImage?.kf.indicatorType = .activity
+        posterImage?.kf.setImage(with: imgUrl)
     }
 }

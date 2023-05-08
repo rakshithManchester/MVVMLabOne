@@ -40,7 +40,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="MovieTitle" destination="je9-Zk-hX1" id="tpm-Hb-pxM"/>
+                <outlet property="movieTitle" destination="je9-Zk-hX1" id="iI7-6I-pmF"/>
                 <outlet property="posterImage" destination="tdK-Ix-96d" id="IYY-4K-SWI"/>
             </connections>
             <point key="canvasLocation" x="192.36641221374046" y="9.1549295774647899"/>

@@ -48,10 +48,7 @@ extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.movieCellID, for: indexPath)
         guard let MovieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
-        MovieListcell.MovieTitle?.text =  viewModel.fetchTitle(indexPath: indexPath.row)
-        let imgUrl = viewModel.fetchImage(indexPath: indexPath.row)
-        MovieListcell.posterImage?.kf.indicatorType = .activity
-        MovieListcell.posterImage?.kf.setImage(with: imgUrl)
+        MovieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel)
         return MovieListcell
     }
 }
