@@ -10,14 +10,14 @@ import UIKit
 final class MovieDetailCoordinator: Coordinator {
     var navigation: UINavigationController!
     var childCoordinator: [Coordinator] = []
-    var movieItem: ItemList! //TODO: extra parameter is this correct inside Coordinator Pattern ? Else how to pass indexPath to Coordinator ?
+    var movieDetail: MovieDetail!
     
     init(navigation: UINavigationController) {
         self.navigation = navigation
     }
     func start() {
         let detailVCFactory = DetailViewFactory()
-        let detailVC = detailVCFactory.getDetailViewController(movieList: movieItem)
+        let detailVC = detailVCFactory.getDetailViewController(movieList: movieDetail)
         navigation.pushViewController(detailVC, animated: true)
     }
 }

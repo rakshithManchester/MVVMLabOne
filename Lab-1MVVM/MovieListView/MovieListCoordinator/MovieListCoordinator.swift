@@ -16,7 +16,6 @@ final class MovieListCoordinator : Coordinator {
         self.navigation = navigation
         childCoordinator.append(self)
     }
-    
     func start() {
         navigation.setViewControllers([appDelegateFactoryinit.getrootViewController()], animated: true)
     }

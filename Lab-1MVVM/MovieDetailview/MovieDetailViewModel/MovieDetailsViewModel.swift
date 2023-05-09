@@ -6,10 +6,10 @@
 //
 
 import UIKit
-//TODO: this viewModel correct? ViewModel does not have properties declared in ViewModel but accessing values from the func calls.
+
 final class MovieDetailsViewModel {
-    var movieList: ItemList!
-    init(movieList: ItemList!) {
+    var movieList: MovieDetail!
+    init(movieList: MovieDetail!) {
         self.movieList = movieList
     }
     

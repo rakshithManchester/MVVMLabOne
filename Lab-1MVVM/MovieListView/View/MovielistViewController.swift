@@ -9,11 +9,9 @@ import UIKit
 import Kingfisher
 
 final class MovielistViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     private let viewModel : MovielistViewModel
     let factory: AppDelegateFactoryProtocol
-    
     convenience init() {
         self.init()
     }
@@ -25,6 +23,7 @@ final class MovielistViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: Constants.TableCellConstants.movieTableviewcellName.rawValue, bundle: nil), forCellReuseIdentifier: Constants.TableCellConstants.movieCellID.rawValue)
@@ -32,8 +31,8 @@ final class MovielistViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        NetworkManager.sharedInstance.urlRequest(urlString: Constants.AppConstants.movieListBaseURL.rawValue) { [self] (movie: MovieList) in
-            viewModel.moviesdata = movie
+        NetworkManager.sharedInstance.urlRequest(urlString: Constants.AppConstants.movieListBaseURL.rawValue) { [self] (movieList: MovieList) in
+            viewModel.movieList = movieList
             DispatchQueue.main.async { [self] in
                 tableView.reloadData()
             }
@@ -42,13 +41,13 @@ final class MovielistViewController: UIViewController {
 }
 extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.moviesdata?.itemCount ?? 0
+        return viewModel.movieList?.itemCount ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellConstants.movieCellID.rawValue, for: indexPath)
-        guard let MovieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
-        MovieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel) //*** MovieListcell name small 
-        return MovieListcell
+        guard let movieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
+        movieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel)
+        return movieListcell
     }
 }
 
@@ -59,22 +58,22 @@ extension MovielistViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: is initialising Coordinator correct ??
         let movieDetailCoordinator = MovieDetailCoordinator(navigation: self.navigationController ?? UINavigationController())
-        movieDetailCoordinator.movieItem = viewModel.moviesdata?.items[indexPath.row]
+        movieDetailCoordinator.movieDetail = viewModel.movieList?.moviesDetailList[indexPath.row]
         movieDetailCoordinator.start()
     }
 }
 
 protocol DetailViewFactoryProtocol {
-    func getDetailViewController(movieList: ItemList) -> DetailViewController
-    func getDetailViewModel(movieList: ItemList) -> MovieDetailsViewModel
+    func getDetailViewController(movieList: MovieDetail) -> DetailViewController
+    func getDetailViewModel(movieList: MovieDetail) -> MovieDetailsViewModel
 }
 
 class DetailViewFactory : DetailViewFactoryProtocol {
-    func getDetailViewController(movieList: ItemList) -> DetailViewController {
+    func getDetailViewController(movieList: MovieDetail) -> DetailViewController {
         let detailsViewModel = getDetailViewModel(movieList: movieList)
         return  DetailViewController(viewModel: detailsViewModel)
     }
-    func getDetailViewModel(movieList: ItemList) -> MovieDetailsViewModel {
+    func getDetailViewModel(movieList: MovieDetail) -> MovieDetailsViewModel {
         return MovieDetailsViewModel(movieList: movieList)
     }
 }

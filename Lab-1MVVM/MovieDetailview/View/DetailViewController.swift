@@ -11,11 +11,6 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var posterImg: UIImageView!
     @IBOutlet weak var movieName: UILabel!
     private let viewModel: MovieDetailsViewModel
-//    var movies: ItemList! {
-//        didSet {
-//            viewModel.movieList = movies
-//        }
-//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()

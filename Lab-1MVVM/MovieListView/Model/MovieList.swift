@@ -12,7 +12,7 @@ struct MovieList: Decodable {
     let description: String
     let favoriteCount: Int
     let id: String
-    let items : [ItemList]
+    let moviesDetailList : [MovieDetail]
     let itemCount: Int
     let iso: String
     let name: String
@@ -23,7 +23,7 @@ struct MovieList: Decodable {
         case description
         case favoriteCount = "favorite_count"
         case id
-        case items
+        case moviesDetailList = "items"
         case itemCount = "item_count"
         case iso = "iso_639_1"
         case name
@@ -42,7 +42,7 @@ struct MovieList: Decodable {
 //    }
 }
 
-struct ItemList : Decodable {
+struct MovieDetail : Decodable {
     let adult: Bool
     let backdropPath: String
     let genreIds: [Int]

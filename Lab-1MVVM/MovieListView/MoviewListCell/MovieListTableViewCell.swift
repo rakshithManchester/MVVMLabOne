@@ -20,9 +20,9 @@ final class MovieListTableViewCell: UITableViewCell {
     }
     func updateUI(indexPathRow: Int, viewModel : MovielistViewModel) {
         movieTitle?.text =  viewModel.fetchTitle(indexPath: indexPathRow)
-        let imgUrl = viewModel.fetchImage(indexPath: indexPathRow)
+        let posterImgUrl = viewModel.fetchImage(indexPath: indexPathRow)
         posterImage?.kf.indicatorType = .activity
-        posterImage?.kf.setImage(with: imgUrl)
+        posterImage?.kf.setImage(with: posterImgUrl)
     }
     //TODO: prepareForReuse not working as expected, wrong image showing.
 //    override func prepareForReuse() {

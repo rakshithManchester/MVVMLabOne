@@ -8,16 +8,15 @@
 import Foundation
 
 final class MovielistViewModel {
-    var moviesdata: MovieList?
+    var movieList: MovieList?
     var posterImage: Data?
     var posterImageString: String?
     
     func fetchTitle(indexPath: Int) -> String {
-        return moviesdata?.items[indexPath].title ?? ""
+        return movieList?.moviesDetailList[indexPath].title ?? ""
     }
-    
     func fetchImage(indexPath: Int) -> URL? {
-        guard  let posterUrl = moviesdata?.items[indexPath].posterPath else { return nil }
+        guard  let posterUrl = movieList?.moviesDetailList[indexPath].posterPath else { return nil }
         guard let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + posterUrl) else { return nil }
         return imgUrl
     }
