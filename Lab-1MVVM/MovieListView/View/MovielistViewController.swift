@@ -16,7 +16,7 @@ final class MovielistViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let viewModel : MovielistViewModel
     let factory: AppDelegateFactoryProtocol
-    var selectionHandler: ((Int) -> ())?
+    var selectionHandler: ((Int,MovieList) -> ())?
     convenience init() {
         self.init()
     }
@@ -62,10 +62,9 @@ extension MovielistViewController : UITableViewDelegate {
         return 250
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectionHandler?(indexPath.row)
-        let movieDetailCoordinator = MovieDetailCoordinator(navigation: self.navigationController ?? UINavigationController())
-        movieDetailCoordinator.movieDetail = viewModel.movieList?.moviesDetailList[indexPath.row]
-        movieDetailCoordinator.start()
+        if let movieList = viewModel.movieList {
+            selectionHandler?(indexPath.row, movieList)
+        }
     }
 }
 
