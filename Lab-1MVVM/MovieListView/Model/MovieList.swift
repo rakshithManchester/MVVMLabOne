@@ -29,17 +29,6 @@ struct MovieList: Decodable {
         case name
         case posterPath = "poster_path"
     }
-//    init(createdBy: String, description: String, favoriteCount: Int, id: String, items: [ItemList], itemCount: Int, iso: String, name: String, posterPath: String) {
-//        self.createdBy = createdBy
-//        self.description = description
-//        self.favoriteCount = favoriteCount
-//        self.id = id
-//        self.items = items
-//        self.itemCount = itemCount
-//        self.iso = iso
-//        self.name = name
-//        self.posterPath = posterPath
-//    }
 }
 
 struct MovieDetail : Decodable {
@@ -76,21 +65,4 @@ struct MovieDetail : Decodable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-//    init(adult: Bool, backdropPath: String, genreIds: [Int], id: Int, mediaType: String, originalLanguage: String, originalTitle: String, overview: String, popularity: Float, posterPath: String, releaseDate: String, title: String, video: Bool, voteAverage: Double, voteCount: Int) {
-//        self.adult = adult
-//        self.backdropPath = backdropPath
-//        self.genreIds = genreIds
-//        self.id = id
-//        self.mediaType = mediaType
-//        self.originalLanguage = originalLanguage
-//        self.originalTitle = originalTitle
-//        self.overview = overview
-//        self.popularity = popularity
-//        self.posterPath = posterPath
-//        self.releaseDate = releaseDate
-//        self.title = title
-//        self.video = video
-//        self.voteAverage = voteAverage
-//        self.voteCount = voteCount
-//    }
 }

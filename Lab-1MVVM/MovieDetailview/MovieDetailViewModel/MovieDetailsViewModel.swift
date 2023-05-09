@@ -8,19 +8,18 @@
 import UIKit
 
 final class MovieDetailsViewModel {
-    var movieList: MovieDetail!
+    var movie: MovieDetail!
     init(movieList: MovieDetail!) {
-        self.movieList = movieList
+        self.movie = movieList
     }
     
-    func getMoviePosterImg() -> URL {
-        if let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + movieList.posterPath) {
+    func getMoviePosterImg() -> URL? {
+        if let imgUrl = URL(string: Constants.AppConstants.imgBaseURL.rawValue + movie.posterPath) {
            return imgUrl
         }
-        //TODO: How to handle unwrapping & returning url ?? // add return optional URL
-        return URL(string: "")!
+        return nil
     }
     func getMovieTitle() -> String {
-        return movieList.title //*** change movieList name movie
+        return movie.title
     }
 }
