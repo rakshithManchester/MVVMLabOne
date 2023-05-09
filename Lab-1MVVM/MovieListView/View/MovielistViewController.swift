@@ -47,7 +47,7 @@ extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellConstants.movieCellID.rawValue, for: indexPath)
         guard let MovieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
-        MovieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel)
+        MovieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel) //*** MovieListcell name small 
         return MovieListcell
     }
 }
@@ -65,12 +65,16 @@ extension MovielistViewController : UITableViewDelegate {
 }
 
 protocol DetailViewFactoryProtocol {
-    func getDetailViewController() -> DetailViewController
+    func getDetailViewController(movieList: ItemList) -> DetailViewController
+    func getDetailViewModel(movieList: ItemList) -> MovieDetailsViewModel
 }
 
 class DetailViewFactory : DetailViewFactoryProtocol {
-    let detailsViewModel = MovieDetailsViewModel()
-    func getDetailViewController() -> DetailViewController {
+    func getDetailViewController(movieList: ItemList) -> DetailViewController {
+        let detailsViewModel = getDetailViewModel(movieList: movieList)
         return  DetailViewController(viewModel: detailsViewModel)
+    }
+    func getDetailViewModel(movieList: ItemList) -> MovieDetailsViewModel {
+        return MovieDetailsViewModel(movieList: movieList)
     }
 }

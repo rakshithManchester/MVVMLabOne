@@ -15,11 +15,9 @@ final class MovieDetailCoordinator: Coordinator {
     init(navigation: UINavigationController) {
         self.navigation = navigation
     }
-    
     func start() {
         let detailVCFactory = DetailViewFactory()
-        let detailVC = detailVCFactory.getDetailViewController()
-        detailVC.movies = movieItem
+        let detailVC = detailVCFactory.getDetailViewController(movieList: movieItem)
         navigation.pushViewController(detailVC, animated: true)
     }
 }

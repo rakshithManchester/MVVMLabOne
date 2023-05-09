@@ -21,3 +21,9 @@ final class MovieListCoordinator : Coordinator {
         navigation.setViewControllers([appDelegateFactoryinit.getrootViewController()], animated: true)
     }
 }
+
+extension MovieListCoordinator {
+    func navigateToDetailview() {
+        //**** Navigate from here MovieDetailCoordinator
+    }
+}

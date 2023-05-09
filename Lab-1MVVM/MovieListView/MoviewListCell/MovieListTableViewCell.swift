@@ -25,9 +25,9 @@ final class MovieListTableViewCell: UITableViewCell {
         posterImage?.kf.setImage(with: imgUrl)
     }
     //TODO: prepareForReuse not working as expected, wrong image showing.
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.posterImage = nil
-        self.movieTitle = nil
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        self.posterImage = nil
+//        self.movieTitle = nil
+//    }
 }
