@@ -10,31 +10,46 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieListCell" rowHeight="184" id="KGk-i7-Jjw" customClass="MovieListTableViewCell" customModule="Lab_1MVVM" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="348" height="184"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieListCell" rowHeight="267" id="KGk-i7-Jjw" customClass="MovieListTableViewCell" customModule="Lab_1MVVM" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="267"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="348" height="184"/>
+                <rect key="frame" x="0.0" y="0.0" width="348" height="267"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tdK-Ix-96d">
-                        <rect key="frame" x="0.0" y="0.0" width="348" height="128"/>
+                        <rect key="frame" x="0.0" y="0.0" width="348" height="185.66666666666666"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="je9-Zk-hX1">
-                        <rect key="frame" x="0.0" y="148" width="348" height="21"/>
+                        <rect key="frame" x="0.0" y="205.66666666666666" width="348" height="21"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tk2-O3-jgO">
+                        <rect key="frame" x="0.0" y="231.66666666666666" width="348" height="35.333333333333343"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Pop Up">
+                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="popupClickWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tVJ-V2-gt8"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="tk2-O3-jgO" secondAttribute="trailing" id="7yg-XQ-Odt"/>
+                    <constraint firstItem="tk2-O3-jgO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DWX-t8-Ivo"/>
                     <constraint firstItem="tdK-Ix-96d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="F03-BS-Qkr"/>
                     <constraint firstItem="tdK-Ix-96d" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.695652" id="R63-gJ-wyy"/>
                     <constraint firstAttribute="trailing" secondItem="tdK-Ix-96d" secondAttribute="trailing" id="WIo-np-qpO"/>
+                    <constraint firstAttribute="bottom" secondItem="tk2-O3-jgO" secondAttribute="bottom" id="dlj-fZ-8tu"/>
                     <constraint firstItem="je9-Zk-hX1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ff9-cv-OmS"/>
                     <constraint firstItem="je9-Zk-hX1" firstAttribute="top" secondItem="tdK-Ix-96d" secondAttribute="bottom" constant="20" id="igr-uk-2uX"/>
                     <constraint firstItem="tdK-Ix-96d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jO3-cs-HN5"/>
+                    <constraint firstItem="tk2-O3-jgO" firstAttribute="top" secondItem="je9-Zk-hX1" secondAttribute="bottom" constant="5" id="r8j-vN-N1e"/>
                     <constraint firstAttribute="trailing" secondItem="je9-Zk-hX1" secondAttribute="trailing" id="xDD-yL-jA6"/>
                 </constraints>
             </tableViewCellContentView>
@@ -43,10 +58,13 @@
                 <outlet property="movieTitle" destination="je9-Zk-hX1" id="iI7-6I-pmF"/>
                 <outlet property="posterImage" destination="tdK-Ix-96d" id="IYY-4K-SWI"/>
             </connections>
-            <point key="canvasLocation" x="192.36641221374046" y="9.1549295774647899"/>
+            <point key="canvasLocation" x="192.36641221374046" y="38.380281690140848"/>
         </tableViewCell>
     </objects>
     <resources>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -8,10 +8,15 @@
 import UIKit
 import Kingfisher
 
+protocol TableviewCellButtonClk {
+    func tableviewCellButtonClk(sender: UIButton)
+}
+
 final class MovielistViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let viewModel : MovielistViewModel
     let factory: AppDelegateFactoryProtocol
+    var selectionHandler: ((Int) -> ())?
     convenience init() {
         self.init()
     }
@@ -46,6 +51,7 @@ extension MovielistViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellConstants.movieCellID.rawValue, for: indexPath)
         guard let movieListcell = cell as? MovieListTableViewCell else { return UITableViewCell()}
+        movieListcell.delegate = self
         movieListcell.updateUI(indexPathRow: indexPath.row, viewModel: viewModel)
         return movieListcell
     }
@@ -53,10 +59,10 @@ extension MovielistViewController : UITableViewDataSource {
 
 extension MovielistViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 250
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: is initialising Coordinator correct ??
+        selectionHandler?(indexPath.row)
         let movieDetailCoordinator = MovieDetailCoordinator(navigation: self.navigationController ?? UINavigationController())
         movieDetailCoordinator.movieDetail = viewModel.movieList?.moviesDetailList[indexPath.row]
         movieDetailCoordinator.start()
@@ -73,7 +79,17 @@ class DetailViewFactory : DetailViewFactoryProtocol {
         let detailsViewModel = getDetailViewModel(movieList: movieList)
         return  DetailViewController(viewModel: detailsViewModel)
     }
-    func getDetailViewModel(movieList: MovieDetail) -> MovieDetailsViewModel {
+   internal func getDetailViewModel(movieList: MovieDetail) -> MovieDetailsViewModel {
         return MovieDetailsViewModel(movieList: movieList)
+    }
+}
+
+
+extension MovielistViewController: TableviewCellButtonClk {
+    func tableviewCellButtonClk(sender: UIButton) {
+        let action = UIAlertAction(title: "cancel", style: .cancel)
+        let alert = UIAlertController(title: "Alter", message: "Movie detail Cell button click", preferredStyle: .alert)
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }

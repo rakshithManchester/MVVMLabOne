@@ -11,18 +11,24 @@ final class MovieListCoordinator : Coordinator {
     let navigation: UINavigationController
     var childCoordinator: [Coordinator] = []
     var appDelegateFactoryinit = AppDelegateFactoryMethods()
+    var movieListVC: MovielistViewController!
     
     required init(navigation: UINavigationController) {
         self.navigation = navigation
         childCoordinator.append(self)
     }
     func start() {
-        navigation.setViewControllers([appDelegateFactoryinit.getrootViewController()], animated: true)
+        movieListVC = appDelegateFactoryinit.getrootViewController()
+        navigation.setViewControllers([movieListVC], animated: true)
     }
 }
 
 extension MovieListCoordinator {
     func navigateToDetailview() {
         //**** Navigate from here MovieDetailCoordinator
+        movieListVC = appDelegateFactoryinit.getrootViewController()
+//        movieListVC.selectionHandler! {
+//            
+//        }
     }
 }

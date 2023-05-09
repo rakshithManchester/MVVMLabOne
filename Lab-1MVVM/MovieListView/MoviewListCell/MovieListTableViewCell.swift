@@ -11,7 +11,8 @@ import Kingfisher
 final class MovieListTableViewCell: UITableViewCell {
     @IBOutlet weak var posterImage: UIImageView?
     @IBOutlet weak var movieTitle: UILabel?
-
+    var delegate: TableviewCellButtonClk!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -23,6 +24,9 @@ final class MovieListTableViewCell: UITableViewCell {
         let posterImgUrl = viewModel.fetchImage(indexPath: indexPathRow)
         posterImage?.kf.indicatorType = .activity
         posterImage?.kf.setImage(with: posterImgUrl)
+    }
+    @IBAction func popupClick(sender: UIButton) {
+        delegate.tableviewCellButtonClk(sender: sender)
     }
     //TODO: prepareForReuse not working as expected, wrong image showing.
 //    override func prepareForReuse() {
